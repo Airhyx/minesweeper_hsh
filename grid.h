@@ -7,7 +7,7 @@ void setBombs(char grid[SIZE][SIZE], int totalBombs);
 void checkNumbers(char grid[SIZE][SIZE]);
 long startTimer();
 void stopTimer(long time_1);
-void highscore(int hours, int minutes, int seconds);
+void setHighscore(int hours, int minutes, int seconds);
 void draw_grid(WINDOW *win, int rows, int cols, char grid[rows][cols], int cursor_row, int cursor_col, bool flagged[rows][cols]);
 void initialize_ncurses();
 WINDOW *create_grid_window(int rows, int cols);

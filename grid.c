@@ -31,7 +31,7 @@ void stopTimer(long time_1)
     seconds = (int)elapsed_time % 60;
     
     printf("\nVergangene Zeit: %d Stunden %d Minuten %d Sekunden.\n", hours, minutes, seconds);
-    highscore(hours, minutes, seconds);
+    setHighscore(hours, minutes, seconds);
 }
 
 void createGrid(char grid[SIZE][SIZE]) {
@@ -141,12 +141,6 @@ void checkNumbers(char grid[SIZE][SIZE])
         }
     }
 
-
-
-void highscore(int hours, int minutes, int seconds)
-{
-    // in Arbeit
-}
 
 void draw_grid(WINDOW *win, int rows, int cols, char grid[rows][cols], int cursor_row, int cursor_col, bool flagged[rows][cols]) {
     for (int i = 0; i < rows; i++) {

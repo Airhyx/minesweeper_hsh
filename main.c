@@ -1,31 +1,38 @@
+#include <ncurses.h>
 #include <stdio.h>
-#include "grid.h" 
-#include <time.h>
+#include "grid.h"
+#include "ncmove.h"
+#define TOTAL_BOMBS 10
+#define HIGHLIGHT_COLOR 1
 #define SIZE 10
+#define FLAG_COLOR 2
 
+int main() {
+    char gridFront[SIZE][SIZE];
+    bool flagged[SIZE][SIZE] = {false}; // Track flagged cells
 
-int main()
-    {
+    createGrid(gridFront);
+    int cursor_row = SIZE / 2, cursor_col = SIZE / 2; // Cursor starts in the middle
 
-        int totalBombs = 10;
-        char gridBack[SIZE][SIZE];
-        char gridFront[SIZE][SIZE];
+    initialize_ncurses();
 
+    WINDOW *grid_win = create_grid_window(SIZE, SIZE);
+    draw_grid(grid_win, SIZE, SIZE, gridFront, cursor_row, cursor_col, flagged);
 
-        long start_time = startTimer();
+    while (1) {
+    int move = input();
 
-        createGrid(gridFront);
-        showGrid(gridFront);
-        setBombs(gridBack, totalBombs);
-        printf("\n\n");
-        showGrid(gridBack);
-        checkNumbers(gridBack);
-        printf("\n\n");
-        showGrid(gridBack);
-
-
-        stopTimer(start_time);
-        
-
-        return 0;
+    if (move == 5) { // Handle flagging
+        flagged[cursor_row][cursor_col] = !flagged[cursor_row][cursor_col]; // Toggle flag
+        draw_grid(grid_win, SIZE, SIZE, gridFront, cursor_row, cursor_col, flagged); // Redraw right after flagging
+        continue; // Skip movement logic
     }
+
+    handle_movement(&cursor_row, &cursor_col, SIZE, SIZE, move);
+    draw_grid(grid_win, SIZE, SIZE, gridFront, cursor_row, cursor_col, flagged);
+}
+
+
+    cleanup_ncurses(grid_win);
+    return 0;
+}
