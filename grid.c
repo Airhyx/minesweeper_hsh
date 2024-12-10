@@ -122,7 +122,7 @@ void highscore(int hours, int minutes, int seconds)
     // in Arbeit
 }
 
-void draw_grid(WINDOW *win, int rows, int cols, char gridFront[rows][cols], char gridBack[rows][cols], int cursor_row, int cursor_col, bool flagged[rows][cols]) 
+void drawGrid(WINDOW *win, int rows, int cols, char gridFront[rows][cols], char gridBack[rows][cols], int cursor_row, int cursor_col, bool flagged[rows][cols]) 
 {
     for (int i = 0; i < rows; i++) 
     {
@@ -168,7 +168,7 @@ void draw_grid(WINDOW *win, int rows, int cols, char gridFront[rows][cols], char
 
 
 
-void initialize_ncurses()
+void initializeNcurses()
 {
     initscr();        //Initialisiert Fenster
     start_color();
@@ -180,12 +180,12 @@ void initialize_ncurses()
 
 }
 
-WINDOW *create_grid_window(int rows, int cols)
+WINDOW *createGridWindow(int rows, int cols)
 {
     return newwin(rows, cols * 4, 1, 1);    //ncurses Window Definition
 }
 
-void clear_cell(char gridFront[SIZE][SIZE], char gridBack[SIZE][SIZE], bool visited[SIZE][SIZE], int row, int col)
+void clearCell(char gridFront[SIZE][SIZE], char gridBack[SIZE][SIZE], bool visited[SIZE][SIZE], int row, int col)
 {
     // zell versteckt aber keine Bombe? Zeigen
     if (gridFront[row][col] == '#' && gridBack[row][col] != 'x') 
