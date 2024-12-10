@@ -1,18 +1,14 @@
-Minesweeper: ncinteract.o grid.o ncmove.o highscore.o
-	gcc main.o ncinteract.o grid.o ncmove.o highscore.o -lncurses -o Minesweeper
+Minesweeper:	main.o	grid.o ncmove.o
+	-gcc main.o grid.o ncmove.o -o Minesweeper -lncurses
 
-
-ncinteract.o: ncinteract.c grid.h ncmove.h highscore.h
-	gcc -c ncinteract.c
+main.o: main.c grid.h ncmove.h
+	-gcc -c main.c
 
 grid.o: grid.c grid.h
-	gcc -c grid.c
+	-gcc -c grid.c
 
 ncmove.o: ncmove.c ncmove.h
-	gcc -c ncmove.c
-
-highscore.o: highscore.c highscore.h
-	gcc -c highscore.c
+	-gcc -c ncmove.c
 
 clean:
-	rm -f *.o Minesweeper
+	rm -f *.o
