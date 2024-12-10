@@ -13,6 +13,7 @@ typedef struct {
     int seconds;
 } Highscore;
 
+int checkWin(char gridBack[SIZE][SIZE], int flagged[SIZE][SIZE], int rows, int cols);
 
 int total_seconds(int hours, int minutes, int seconds);
 long startTimer();

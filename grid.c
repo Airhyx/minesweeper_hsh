@@ -7,33 +7,6 @@
 #define HIGHLIGHT_COLOR 1
 #define FLAG_COLOR 2
 
-long startTimer()
-{
-    time_t time_1;
-    time_1 = time(NULL);
-    return time_1;
-}
-
-void stopTimer(long time_1)
-{
-    time_t time_2;
-    time_2 = time(NULL);
-    double elapsed_time = difftime(time_2, time_1);
-    //printf("\ntime1 = %ld , time2 = %ld ", time_1, time_2);
-
-    int hours = 0;
-    int minutes = 0;
-    int seconds = 0;
-    
-
-    hours = elapsed_time / 3600;
-    minutes= ((int)elapsed_time % 3600) / 60;
-    seconds = (int)elapsed_time % 60;
-    
-    printf("\nVergangene Zeit: %d Stunden %d Minuten %d Sekunden.\n", hours, minutes, seconds);
-    highscore(hours, minutes, seconds);
-}
-
 void createGrid(char grid[SIZE][SIZE]) 
 {
     for(int i = 0; i<SIZE;i++)
@@ -116,13 +89,7 @@ void checkNumbers(char grid[SIZE][SIZE])
     }
 }
 
-
-void highscore(int hours, int minutes, int seconds)
-{
-    // in Arbeit
-}
-
-void drawGrid(WINDOW *win, int rows, int cols, char gridFront[rows][cols], char gridBack[rows][cols], int cursor_row, int cursor_col, bool flagged[rows][cols]) 
+void drawGrid(WINDOW *win, int rows, int cols, char gridFront[rows][cols], char gridBack[rows][cols], int cursor_row, int cursor_col, int flagged[rows][cols]) 
 {
     for (int i = 0; i < rows; i++) 
     {
@@ -130,7 +97,7 @@ void drawGrid(WINDOW *win, int rows, int cols, char gridFront[rows][cols], char 
         {
             if (i == cursor_row && j == cursor_col) 
             {
-                if (flagged[i][j]) 
+                if (flagged[i][j] == 1) 
                 {
                     wattron(win, COLOR_PAIR(FLAG_COLOR));
                     mvwprintw(win, i, j * 3, "[F]");
@@ -146,7 +113,7 @@ void drawGrid(WINDOW *win, int rows, int cols, char gridFront[rows][cols], char 
                 }
             } else 
             { 
-                if (flagged[i][j]) 
+                if (flagged[i][j] == 1) 
                 { 
                     wattron(win, COLOR_PAIR(FLAG_COLOR));
                     mvwprintw(win, i, j * 3, " F ");

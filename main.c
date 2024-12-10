@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "grid.h"
 #include "ncmove.h"
+#include "highscore.h"
 
 #define TOTAL_BOMBS 10
 #define HIGHLIGHT_COLOR 1
@@ -18,9 +19,10 @@ int main()
 {
     char gridFront[SIZE][SIZE];
     char gridBack[SIZE][SIZE];
-    bool flagged[SIZE][SIZE] = {false}; 
+    int flagged[SIZE][SIZE] = {0}; 
     bool visited[SIZE][SIZE] = {false}; 
-
+    bool gameWon = false;
+    
     createGrid(gridFront);
     setBombs(gridBack, TOTAL_BOMBS); 
     checkNumbers(gridBack);
@@ -45,11 +47,12 @@ int main()
         { 
             if (gridFront[cursor_row][cursor_col] == '#') 
             {
-                flagged[cursor_row][cursor_col] = !flagged[cursor_row][cursor_col]; // Toggle Flag
+                if(flagged[cursor_row][cursor_col] == 0) flagged[cursor_row][cursor_col] = 1;
+                else flagged[cursor_row][cursor_col] = 0; // Toggle Flag
             }
         } else if (move == 6) 
         { 
-            if (flagged[cursor_row][cursor_col]) 
+            if (flagged[cursor_row][cursor_col] == 1) 
             {
                 continue; // Zellen mit Flagge nicht clearen
             }
@@ -66,5 +69,13 @@ int main()
     }
 
     cleanupNcurses(grid_win);
+
+    if (checkWin(gridBack, flagged, SIZE, SIZE) == 1) gameWon = true;
+
+    if(gameWon == true) 
+    {
+        printf("GlÅckwunsch");
+    } else printf("\n    BOOM! Leider verloren ;/    \n");
+
     return 0;
 }

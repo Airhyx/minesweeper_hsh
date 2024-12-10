@@ -72,7 +72,7 @@ void displayInput(int direction)
     refresh();
 }
 
-void handle_movement(int *cursor_row, int *cursor_col, int rows, int cols, int move) 
+void handleMovement(int *cursor_row, int *cursor_col, int rows, int cols, int move) 
 {
     if (move == 1 && *cursor_row > 0) (*cursor_row)--;              // hoch    
     else if (move == 3 && *cursor_row < rows - 1) (*cursor_row)++;  // runter
