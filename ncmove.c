@@ -74,13 +74,8 @@ void displayInput(int direction)
 
 void handle_movement(int *cursor_row, int *cursor_col, int rows, int cols, int move) 
 {
-    if (move == 1 && *cursor_row > 0) { // Move up
-        (*cursor_row)--;
-    } else if (move == 3 && *cursor_row < rows - 1) { // Move down
-        (*cursor_row)++;
-    } else if (move == 2 && *cursor_col > 0) { // Move left
-        (*cursor_col)--;
-    } else if (move == 4 && *cursor_col < cols - 1) { // Move right
-        (*cursor_col)++;
-    }
+    if (move == 1 && *cursor_row > 0) (*cursor_row)--;              // hoch    
+    else if (move == 3 && *cursor_row < rows - 1) (*cursor_row)++;  // runter
+    else if (move == 2 && *cursor_col > 0) (*cursor_col)--;         // links
+    else if (move == 4 && *cursor_col < cols - 1) (*cursor_col)++;  //rechts
 }
