@@ -102,38 +102,14 @@ void checkNumbers(char grid[SIZE][SIZE])
             countNum = 0;
             if (grid[i][j] != 'x') 
             {
-                if (i > 0 && j < SIZE - 1 && grid[i - 1][j + 1] == 'x') 
-                {
-                    countNum++;
-                }
-                if (i < SIZE - 1 && j > 0 && grid[i + 1][j - 1] == 'x') 
-                {
-                    countNum++;
-                }
-                if (i < SIZE - 1 && j < SIZE - 1 && grid[i + 1][j + 1] == 'x') 
-                {
-                    countNum++;
-                }
-                if (i > 0 && j > 0 && grid[i - 1][j - 1] == 'x') 
-                {
-                    countNum++;
-                }
-                if (i < SIZE - 1 && grid[i + 1][j] == 'x') 
-                {
-                    countNum++;
-                }
-                if (j < SIZE - 1 && grid[i][j + 1] == 'x') 
-                {
-                    countNum++;
-                }
-                if (i > 0 && grid[i - 1][j] == 'x') 
-                {
-                    countNum++;
-                }
-                if (j > 0 && grid[i][j - 1] == 'x') 
-                {
-                    countNum++;
-                }
+                if (i > 0 && j < SIZE - 1 && grid[i - 1][j + 1] == 'x') countNum++;
+                if (i < SIZE - 1 && j > 0 && grid[i + 1][j - 1] == 'x') countNum++;
+                if (i < SIZE - 1 && j < SIZE - 1 && grid[i + 1][j + 1] == 'x') countNum++;
+                if (i > 0 && j > 0 && grid[i - 1][j - 1] == 'x') countNum++;
+                if (i < SIZE - 1 && grid[i + 1][j] == 'x') countNum++;
+                if (j < SIZE - 1 && grid[i][j + 1] == 'x') countNum++;
+                if (i > 0 && grid[i - 1][j] == 'x') countNum++;
+                if (j > 0 && grid[i][j - 1] == 'x') countNum++;
                 grid[i][j] = '0' + countNum;
             }
         }
@@ -185,7 +161,7 @@ void draw_grid(WINDOW *win, int rows, int cols, char gridFront[rows][cols], char
             }
         }
     }
-    wrefresh(win); // Ensure the grid is updated
+    wrefresh(win); // Aktualisiert unser Spielfeld
 }
 
 
@@ -194,66 +170,65 @@ void draw_grid(WINDOW *win, int rows, int cols, char gridFront[rows][cols], char
 
 void initialize_ncurses()
 {
-    initscr();
+    initscr();        //Initialisiert Fenster
     start_color();
     cbreak();
     noecho();
-    keypad(stdscr, TRUE);
-    init_pair(HIGHLIGHT_COLOR, COLOR_YELLOW, COLOR_BLACK);
+    keypad(stdscr, TRUE);    //lässt Pfeil Input zu
+    init_pair(HIGHLIGHT_COLOR, COLOR_YELLOW, COLOR_BLACK);    //Farben zu Definitiion zuordnen
     init_pair(FLAG_COLOR, COLOR_RED, COLOR_BLACK);
 
 }
 
 WINDOW *create_grid_window(int rows, int cols)
 {
-    return newwin(rows, cols * 4, 1, 1);
+    return newwin(rows, cols * 4, 1, 1);    //ncurses Window Definition
 }
 
 void clear_cell(char gridFront[SIZE][SIZE], char gridBack[SIZE][SIZE], bool visited[SIZE][SIZE], int row, int col)
 {
-    // If the cell is hidden and not a bomb, reveal it
+    // zell versteckt aber keine Bombe? Zeigen
     if (gridFront[row][col] == '#' && gridBack[row][col] != 'x') 
     {
         gridFront[row][col] = gridBack[row][col];
 
-        // If the cell is a '0' (no bombs nearby), perform flood fill
         if (gridBack[row][col] == '0') 
         {
-            flood_fill(gridFront, gridBack, visited, row, col);
+            floodFill(gridFront, gridBack, visited, row, col);
         }
     }
 }
 
-void flood_fill(char gridFront[SIZE][SIZE], char gridBack[SIZE][SIZE], bool visited[SIZE][SIZE], int row, int col) {
-    // Ensure the cell is in bounds
+void floodFill(char gridFront[SIZE][SIZE], char gridBack[SIZE][SIZE], bool visited[SIZE][SIZE], int row, int col) {
+    // Überprüfen ob Zelle auf Spielfeld ist
     if (row < 0 || col < 0 || row >= SIZE || col >= SIZE) return;
 
-    // Stop if it's already revealed or has already been cleared
+    // Return falls schon aufgedeckt und keine '0'
     if (gridFront[row][col] != '#' && gridFront[row][col] != '0') return;
 
-    // Stop if it's a bomb
+    // Return falls Bombe (Fehler)
     if (gridBack[row][col] == 'x') return;
 
-    // Stop if the cell is already visited
+    // Return falls schon gecleart 
     if (visited[row][col]) return;
 
-    // Mark the cell as visited
+    // Zelle als gecleart markieren
     visited[row][col] = true;
 
-    // Reveal the current cell
+    // Clearen
     gridFront[row][col] = gridBack[row][col];
 
-    // If it's a '0' (no bombs nearby), recursively flood surrounding cells
+    // Falls Zelle '0' ist, rekursiv um sich selbst floodFill
     if (gridBack[row][col] == '0') 
     { 
-        flood_fill(gridFront, gridBack, visited, row - 1, col); // Up
-        flood_fill(gridFront, gridBack, visited, row + 1, col); // Down
-        flood_fill(gridFront, gridBack, visited, row, col - 1); // Left
-        flood_fill(gridFront, gridBack, visited, row, col + 1); // Right
-        flood_fill(gridFront, gridBack, visited, row - 1, col + 1); // Up Right
-        flood_fill(gridFront, gridBack, visited, row + 1, col + 1); // Down Right
-        flood_fill(gridFront, gridBack, visited, row - 1, col - 1); // Up Left
-        flood_fill(gridFront, gridBack, visited, row + 1, col - 1); // Down Right
+        floodFill(gridFront, gridBack, visited, row - 1, col); // Up
+        floodFill(gridFront, gridBack, visited, row + 1, col); // Down
+        floodFill(gridFront, gridBack, visited, row, col - 1); // Left
+        floodFill(gridFront, gridBack, visited, row, col + 1); // Right
+        floodFill(gridFront, gridBack, visited, row - 1, col + 1); // Up Right
+        floodFill(gridFront, gridBack, visited, row + 1, col + 1); // Down Right
+        floodFill(gridFront, gridBack, visited, row - 1, col - 1); // Up Left
+        floodFill(gridFront, gridBack, visited, row + 1, col - 1); // Down Right
     }
 }
 
