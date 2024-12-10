@@ -91,10 +91,6 @@ void checkNumbers(char grid[SIZE][SIZE])
 }
 
 
-void highscore(int hours, int minutes, int seconds)
-{
-    // in Arbeit
-}
 
 void drawGrid(WINDOW *win, int rows, int cols, char gridFront[rows][cols], char gridBack[rows][cols], int cursor_row, int cursor_col, bool flagged[rows][cols]) 
 {

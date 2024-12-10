@@ -14,16 +14,16 @@ typedef struct {
 } Highscore;
 
 
-int total_seconds(int hours, int minutes, int seconds);
+int calcSeconds(int hours, int minutes, int seconds);
 long startTimer();
 void stopTimer(long time_1);
 
-int read_highscores(const char *filename, Highscore highscores[]);
+int readHighscores(const char *filename, Highscore highscores[]);
 
 
-void write_highscores(const char *filename, Highscore highscores[], int count);
+void writeHighscores(const char *filename, Highscore highscores[], int count);
 
 
-void highscore(int new_hours, int new_minutes, int new_seconds);
+void checkHighscore(int new_hours, int new_minutes, int new_seconds);
 
 #endif

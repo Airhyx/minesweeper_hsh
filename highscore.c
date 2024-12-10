@@ -14,13 +14,12 @@ typedef struct {
 } Highscore;
 
 
-
-
-int total_seconds(int hours, int minutes, int seconds) {
+int calcSeconds(int hours, int minutes, int seconds) {
     return hours * 3600 + minutes * 60 + seconds;
 }
 
-int read_highscores(const char *filename, Highscore highscores[]) {
+
+int readHighscores(const char *filename, Highscore highscores[]) {
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         perror("Fehler beim Öffnen der Highscore-Datei");
@@ -39,8 +38,8 @@ int read_highscores(const char *filename, Highscore highscores[]) {
     return count;
 }
 
-// Funktion zum Schreiben der Highscores in die Datei
-void write_highscores(const char *filename, Highscore highscores[], int count) {
+
+void writeHighscores(const char *filename, Highscore highscores[], int count) {
     FILE *file = fopen(filename, "w");
     if (file == NULL) {
         perror("Fehler beim Öffnen der Highscore-Datei");
@@ -57,10 +56,11 @@ void write_highscores(const char *filename, Highscore highscores[], int count) {
     fclose(file);
 }
 
-// Funktion zur Verwaltung des Highscores
-void highscore(int new_hours, int new_minutes, int new_seconds) {
+
+void checkHighscore(int new_hours, int new_minutes, int new_seconds)
+ {
     Highscore highscores[MAX_ENTRIES + 1]; // +1 für möglichen neuen Eintrag
-    int count = read_highscores(FILENAME, highscores);
+    int count = readHighscores(FILENAME, highscores);
 
     printf("Aktuelle Highscores:\n");
     for (int i = 0; i < count; i++) {
@@ -71,18 +71,18 @@ void highscore(int new_hours, int new_minutes, int new_seconds) {
                highscores[i].seconds);
     }
 
-    // Gesamtzeit der neuen Zeit berechnen
-    int new_total = total_seconds(new_hours, new_minutes, new_seconds);
 
-    // Prüfen, ob die neue Zeit in die Highscores gehört
+    int new_total = calcSeconds(new_hours, new_minutes, new_seconds);
+
+
     int inserted = 0;
     for (int i = 0; i < count; i++) {
-        if (new_total < total_seconds(highscores[i].hours, highscores[i].minutes, highscores[i].seconds)) {
-            // Verschieben der bestehenden Einträge, um Platz zu schaffen
+        if (new_total < calcSeconds(highscores[i].hours, highscores[i].minutes, highscores[i].seconds)) {
+
             for (int j = count; j > i; j--) {
                 highscores[j] = highscores[j - 1];
             }
-            // Einfügen des neuen Eintrags
+
             printf("Neue Highscore-Zeit! Bitte Namen eingeben: ");
             scanf("%s", highscores[i].name);
             highscores[i].hours = new_hours;
@@ -94,7 +94,7 @@ void highscore(int new_hours, int new_minutes, int new_seconds) {
         }
     }
 
-    // Wenn die Liste noch nicht voll ist und keine bessere Zeit gefunden wurde
+
     if (!inserted && count < MAX_ENTRIES) {
         printf("Neue Highscore-Zeit! Bitte Namen eingeben: ");
         scanf("%s", highscores[count].name);
@@ -104,13 +104,13 @@ void highscore(int new_hours, int new_minutes, int new_seconds) {
         count++;
     }
 
-    // Falls es mehr als 10 Einträge gibt, den letzten löschen
+
     if (count > MAX_ENTRIES) {
         count = MAX_ENTRIES;
     }
 
-    // Highscores speichern
-    write_highscores(FILENAME, highscores, count);
+
+    writeHighscores(FILENAME, highscores, count);
     printf("Highscores wurden aktualisiert.\n");
 }
 
@@ -139,5 +139,5 @@ void stopTimer(long time_1)
     seconds = (int)elapsed_time % 60;
     
     printf("\nVergangene Zeit: %d Stunden %d Minuten %d Sekunden.\n", hours, minutes, seconds);
-    highscore(hours, minutes, seconds);
+    checkHighscore(hours, minutes, seconds);
 }

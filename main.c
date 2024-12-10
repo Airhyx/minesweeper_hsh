@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include "grid.h"
 #include "ncmove.h"
+#include "highscore.h"
+
 
 #define TOTAL_BOMBS 10
 #define HIGHLIGHT_COLOR 1
@@ -27,6 +29,7 @@ int main()
 
     int cursor_row = SIZE / 2, cursor_col = SIZE / 2; // Cursor startet mittig
 
+    long time_1 = startTimer();
     initializeNcurses();
 
     WINDOW *grid_win = createGridWindow(SIZE, SIZE);
@@ -40,7 +43,7 @@ int main()
 
         if (move == 1 || move == 2 || move == 3 || move == 4) // Input WASD oder Pfeiltasten
         {
-            handle_Movement(&cursor_row, &cursor_col, SIZE, SIZE, move);
+            handleMovement(&cursor_row, &cursor_col, SIZE, SIZE, move);
         } else if (move == 5) 
         { 
             if (gridFront[cursor_row][cursor_col] == '#') 
@@ -66,5 +69,7 @@ int main()
     }
 
     cleanupNcurses(grid_win);
+stopTimer(time_1);
+
     return 0;
 }
