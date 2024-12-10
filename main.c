@@ -40,7 +40,7 @@ int main()
 
         if (move == 1 || move == 2 || move == 3 || move == 4) // Input WASD oder Pfeiltasten
         {
-            handleMovement(&cursor_row, &cursor_col, SIZE, SIZE, move);
+            handle_Movement(&cursor_row, &cursor_col, SIZE, SIZE, move);
         } else if (move == 5) 
         { 
             if (gridFront[cursor_row][cursor_col] == '#') 

@@ -5,8 +5,6 @@ void createGrid(char grid[SIZE][SIZE]);
 void showGrid(char grid[SIZE][SIZE]);
 void setBombs(char grid[SIZE][SIZE], int totalBombs);
 void checkNumbers(char grid[SIZE][SIZE]);
-long startTimer();
-void stopTimer(long time_1);
 void highscore(int hours, int minutes, int seconds);
 void drawGrid(WINDOW *win, int rows, int cols, char gridFront[rows][cols], char gridBack[rows][cols], int cursor_row, int cursor_col, bool flagged[rows][cols]);
 void initializeNcurses();

@@ -7,32 +7,6 @@
 #define HIGHLIGHT_COLOR 1
 #define FLAG_COLOR 2
 
-long startTimer()
-{
-    time_t time_1;
-    time_1 = time(NULL);
-    return time_1;
-}
-
-void stopTimer(long time_1)
-{
-    time_t time_2;
-    time_2 = time(NULL);
-    double elapsed_time = difftime(time_2, time_1);
-    //printf("\ntime1 = %ld , time2 = %ld ", time_1, time_2);
-
-    int hours = 0;
-    int minutes = 0;
-    int seconds = 0;
-    
-
-    hours = elapsed_time / 3600;
-    minutes= ((int)elapsed_time % 3600) / 60;
-    seconds = (int)elapsed_time % 60;
-    
-    printf("\nVergangene Zeit: %d Stunden %d Minuten %d Sekunden.\n", hours, minutes, seconds);
-    highscore(hours, minutes, seconds);
-}
 
 void createGrid(char grid[SIZE][SIZE]) 
 {

@@ -4,6 +4,6 @@
 
 int input();
 void displayInput(int direction);
-void handle_movement(int *cursor_row, int *cursor_col, int rows, int cols, int move);
+void handleMovement(int *cursor_row, int *cursor_col, int rows, int cols, int move);
 
 #endif
