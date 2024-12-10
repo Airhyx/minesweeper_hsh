@@ -8,10 +8,10 @@ void checkNumbers(char grid[SIZE][SIZE]);
 long startTimer();
 void stopTimer(long time_1);
 void highscore(int hours, int minutes, int seconds);
-void draw_grid(WINDOW *win, int rows, int cols, char gridFront[rows][cols], char gridBack[rows][cols], int cursor_row, int cursor_col, bool flagged[rows][cols]);
-void initialize_ncurses();
-WINDOW *create_grid_window(int rows, int cols);
-void clear_cell(char gridBack[SIZE][SIZE], char gridFront[SIZE][SIZE], bool visited[SIZE][SIZE], int cursor_row, int cursor_col);
-void flood_fill(char gridBack[SIZE][SIZE], char gridFront[SIZE][SIZE], bool visited[SIZE][SIZE], int row, int col);
-void cleanup_ncurses(WINDOW *grid_win);
+void drawGrid(WINDOW *win, int rows, int cols, char gridFront[rows][cols], char gridBack[rows][cols], int cursor_row, int cursor_col, bool flagged[rows][cols]);
+void initializeNcurses();
+WINDOW *createGridWindow(int rows, int cols);
+void clearCell(char gridBack[SIZE][SIZE], char gridFront[SIZE][SIZE], bool visited[SIZE][SIZE], int cursor_row, int cursor_col);
+void floodFill(char gridBack[SIZE][SIZE], char gridFront[SIZE][SIZE], bool visited[SIZE][SIZE], int row, int col);
+void cleanupNcurses(WINDOW *grid_win);
 #endif
