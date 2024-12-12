@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #define MAX_ENTRIES 10
+#define SIZE 10
 #define MAX_NAME_LEN 50
 #define FILENAME "highscores.txt"
 
@@ -13,8 +14,18 @@ typedef struct {
     int seconds;
 } Highscore;
 
-
-
+int checkWin(char gridBack[SIZE][SIZE], int flagged[SIZE][SIZE], int rows, int cols)
+{
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            // Fr jede '*' muss auch eine 1 bei flagged sein
+            if (gridBack[i][j] == '*' && flagged[i][j] != 1) return 0;
+            // Fr jede 1 bei flagged aber auch eine '*' bei gridBack
+            if (flagged[i][j] == 1 && gridBack[i][j] != '*') return 0; 
+        }
+    }
+    return 1; // Sieg
+}
 
 int total_seconds(int hours, int minutes, int seconds) {
     return hours * 3600 + minutes * 60 + seconds;

@@ -1,7 +1,7 @@
-Minesweeper:	main.o	grid.o ncmove.o
-	-gcc main.o grid.o ncmove.o -o Minesweeper -lncurses
+Minesweeper:	main.o	grid.o ncmove.o highscore.o
+	-gcc main.o grid.o ncmove.o highscore.o -o Minesweeper -lncurses
 
-main.o: main.c grid.h ncmove.h
+main.o: main.c grid.h ncmove.h highscore.h
 	-gcc -c main.c
 
 grid.o: grid.c grid.h
@@ -9,6 +9,9 @@ grid.o: grid.c grid.h
 
 ncmove.o: ncmove.c ncmove.h
 	-gcc -c ncmove.c
+
+highscore.o: highscore.c highscore.h
+	-gcc -c highscore.c
 
 clean:
 	rm -f *.o
